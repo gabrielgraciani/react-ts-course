@@ -27,6 +27,8 @@ const Users = () => {
     };
 
     setUsers([...users, newUser]);
+    setName('');
+    setEmail('');
   }
 
   const handleDeleteUser = (id: number) => {
@@ -39,6 +41,7 @@ const Users = () => {
 
     const updatedUsers = users.map((user) => user.id === userSelected?.id ? userSelected : user);
     setUsers(updatedUsers);
+    setUserSelected(undefined);
   }
 
   return (
@@ -50,7 +53,7 @@ const Users = () => {
           <form onSubmit={handleEditUser}>
             <input name="name" value={userSelected.name} onChange={(e) => setUserSelected({ ...userSelected, name: e.target.value})} placeholder="Nome" />
             <input name="email" value={userSelected.email} onChange={(e) => setUserSelected({ ...userSelected, email: e.target.value})} placeholder="Email" />
-            <input type="submit" value="Edtiar" />
+            <input type="submit" value="Editar" />
           </form>
         ) : (
           <form onSubmit={handleCreateUser}>
@@ -58,10 +61,7 @@ const Users = () => {
             <input name="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
             <input type="submit" value="Cadastrar" />
           </form>
-        )}
-
-        
-
+        )}   
       </div>
 
       <table>
