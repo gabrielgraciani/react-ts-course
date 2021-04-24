@@ -1,4 +1,5 @@
 import React, { useState} from 'react';
+import { FiEdit2, FiTrash2 } from 'react-icons/fi';
 
 import '../styles/users.scss';
 
@@ -25,6 +26,12 @@ const Users = () => {
     };
 
     setUsers([...users, newUser]);
+  }
+
+  const handleDeleteUser = (id: number) => {
+    const filteredUsers = users.filter((user) => user.id !== id);
+    setUsers(filteredUsers);
+
   }
 
   return (
@@ -56,8 +63,8 @@ const Users = () => {
               <td>{user.id}</td>
               <td>{user.name}</td>
               <td>{user.email}</td>
-              <td>Editar</td>
-              <td>Excluir</td>
+              <td><button><FiEdit2 /></button></td>
+              <td><button onClick={() => handleDeleteUser(user.id)}><FiTrash2 /></button></td>
             </tr>
           ))}
         </tbody>
