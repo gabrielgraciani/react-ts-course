@@ -3,6 +3,7 @@ import React, { useState} from 'react';
 import '../styles/users.scss';
 
 interface IUsers {
+  id: number;
   name: string;
   email: string;
 }
@@ -50,20 +51,15 @@ const Users = () => {
         </thead>
 
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Gabriel</td>
-            <td>gabriel@hotmail.com</td>
-            <td>Editar</td>
-            <td>Excluir</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>Gabriel</td>
-            <td>gabriel@hotmail.com</td>
-            <td>Editar</td>
-            <td>Excluir</td>
-          </tr>
+          {users.map((user) => (
+            <tr key={user.id}>
+              <td>{user.id}</td>
+              <td>{user.name}</td>
+              <td>{user.email}</td>
+              <td>Editar</td>
+              <td>Excluir</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
