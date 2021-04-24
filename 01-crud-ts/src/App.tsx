@@ -1,11 +1,13 @@
 import Header from './components/Header';
+import Users from './components/Users';
 import './styles/global.scss';
 
 function App() {
   return (
-    <div className="App">
+    <>
       <Header />
-    </div>
+      <Users />
+    </>
   );
 }
 
