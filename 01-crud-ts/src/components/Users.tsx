@@ -3,7 +3,7 @@ import { FiEdit2, FiTrash2 } from 'react-icons/fi';
 
 import '../styles/users.scss';
 
-interface IUsers {
+interface IUser {
   id: number;
   name: string;
   email: string;
@@ -13,7 +13,8 @@ const Users = () => {
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [users, setUsers] = useState<IUsers[]>([]);
+  const [users, setUsers] = useState<IUser[]>([]);
+  const [userSelected, setUserSelected] = useState<IUser>();
 
   const handleCreateUser = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -31,7 +32,13 @@ const Users = () => {
   const handleDeleteUser = (id: number) => {
     const filteredUsers = users.filter((user) => user.id !== id);
     setUsers(filteredUsers);
+  }
 
+  const handleEditUser = (e: React.ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const updatedUsers = users.map((user) => user.id === userSelected?.id ? userSelected : user);
+    setUsers(updatedUsers);
   }
 
   return (
@@ -39,11 +46,22 @@ const Users = () => {
       <div className="head">
         <h4>Lista de usuários</h4>
 
-        <form onSubmit={handleCreateUser}>
-          <input name="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Nome" />
-          <input name="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
-          <input type="submit" value="Cadastrar" />
-        </form>
+        {userSelected ? (
+          <form onSubmit={handleEditUser}>
+            <input name="name" value={userSelected.name} onChange={(e) => setUserSelected({ ...userSelected, name: e.target.value})} placeholder="Nome" />
+            <input name="email" value={userSelected.email} onChange={(e) => setUserSelected({ ...userSelected, email: e.target.value})} placeholder="Email" />
+            <input type="submit" value="Edtiar" />
+          </form>
+        ) : (
+          <form onSubmit={handleCreateUser}>
+            <input name="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Nome" />
+            <input name="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
+            <input type="submit" value="Cadastrar" />
+          </form>
+        )}
+
+        
+
       </div>
 
       <table>
@@ -63,7 +81,7 @@ const Users = () => {
               <td>{user.id}</td>
               <td>{user.name}</td>
               <td>{user.email}</td>
-              <td><button><FiEdit2 /></button></td>
+              <td><button onClick={() => setUserSelected(user)}><FiEdit2 /></button></td>
               <td><button onClick={() => handleDeleteUser(user.id)}><FiTrash2 /></button></td>
             </tr>
           ))}
