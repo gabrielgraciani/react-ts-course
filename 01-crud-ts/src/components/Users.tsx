@@ -1,14 +1,39 @@
+import React, { useState} from 'react';
+
 import '../styles/users.scss';
 
+interface IUsers {
+  name: string;
+  email: string;
+}
+
 const Users = () => {
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [users, setUsers] = useState<IUsers[]>([]);
+
+  const handleCreateUser = (e: React.ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log('teste');
+
+    const newUser = {
+      id: Math.random() * 1000,
+      name,
+      email
+    };
+
+    setUsers([...users, newUser]);
+  }
+
   return (
     <div className="container">
       <div className="head">
         <h4>Lista de usuários</h4>
 
-        <form>
-          <input placeholder="Nome" />
-          <input placeholder="Email" />
+        <form onSubmit={handleCreateUser}>
+          <input name="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Nome" />
+          <input name="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
           <input type="submit" value="Cadastrar" />
         </form>
       </div>
